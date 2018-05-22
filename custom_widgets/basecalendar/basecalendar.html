@@ -1,0 +1,16 @@
+<h1 class="title" data-bind="text: title, attr:{style: title_style}"></h1>
+<h1 class="title2" data-bind="text: title2, attr:{style: title2_style}"></h1>
+<div id="calendar" class="calendar" data-bind="attr:{style: calendar_style}">
+    <p class="calendarcontainer" data-bind="html: calendar; attr:{style: line_style}"></p>
+</div>
+<div id="event" class="event" data-bind="attr:{style: event_style}">
+    <p class="eventcontainer ">
+            <h3 data-bind="text:event_summary"></h3>
+            <h4 data-bind="text:event_location"></h4>
+            <p data-bind="text:event_start">Start: </p><p data-bind="text:event_end">End: </p>
+            <p data-bind="text:event_description"></p>
+    </p>
+    <button class=button type="button" id=back-button>Back</button>
+    <button class=button type="button" id=signout-button>Signout</button>
+</div>
+<button class=button type="button" id=authorize-button>Authorize</button>

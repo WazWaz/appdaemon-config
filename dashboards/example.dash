@@ -1,0 +1,23 @@
+#
+# Main arguments, all optional
+#
+title: Example Calendar
+widget_dimensions: [100, 100]
+widget_margins: [5, 5]
+
+layout:
+    - calendar(4x4)
+    -
+    -
+    -
+
+calendar:
+    widget_type: gcal
+    colorpast: "#555555"
+    calendars:
+      en.australian#holiday@group.v.calendar.google.com:
+        color: "#dddddd"
+    updateinterval: 120000
+    apikey: !secret google_calendar_apikey
+    clientid: !secret google_calendar_clientid
+    days: 7

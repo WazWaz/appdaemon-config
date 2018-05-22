@@ -1,0 +1,64 @@
+.widget-basecalendar-{{id}} {
+	position: relative;
+}
+.widget-basecalendar-{{id}} .title {
+    position: absolute;
+    top: 5px;
+    width: 100%;
+}
+.widget-basecalendar-{{id}} .title2 {
+    position: absolute;
+    top: 23px;
+    width: 100%;
+}
+
+.widget-basecalendar-{{id}} .calendar {
+    overflow-y: auto;
+    height: 400px;
+}
+
+.widget-basecalendar-{{id}} .event {
+    overflow-y: auto;
+    height: 400px;
+    color: white;
+}
+
+.widget-basecalendar-{{id}} .timeheader {
+    color: #aaaaaa;
+    font-size: 75%;
+}
+
+.widget-basecalendar-{{id}} .dayheader {
+    color: #000000;
+    background-color: #888888;
+    font-size: 100%;
+}
+
+.widget-basecalendar-{{id}} .calendarcontainer {
+    margin: 10px 10px 10px 10px;
+    text-align: left;
+    color: #ffffff;
+    font-size: 200%;
+	width: 95%;
+}
+
+.widget-basecalendar-{{id}} .h4 {
+    color: white;
+    font-size: 100%;
+}
+
+.widget-basecalendar-{{id}} .button {
+    background-color: #222222;
+    border: none;
+    color: white;
+    padding: 8px 4px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 10px;
+} 
+
+/* Stop Obsidian skin's pretty overlay from stealing clicks. */
+.widget::after {
+    pointer-events: none;
+}
