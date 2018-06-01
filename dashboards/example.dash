@@ -17,7 +17,7 @@ calendar:
     calendars:
       en.australian#holiday@group.v.calendar.google.com:
         color: "#dddddd"
-    updateinterval: 120000
+    updateinterval: 120
     apikey: !secret google_calendar_apikey
     clientid: !secret google_calendar_clientid
     days: 7
