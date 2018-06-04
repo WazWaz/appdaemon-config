@@ -1,0 +1,12 @@
+hello_world:
+  module: hello
+  class: HelloWorld
+netstat:
+  module: netstat
+  class: NetStat
+  updateInterval: 60
+  logbase: 1.25
+  max: 6000
+  samples: 60
+  url: 'http://192.168.1.1/statsifc.html'
+  auth: ['admin', !secret router_password]

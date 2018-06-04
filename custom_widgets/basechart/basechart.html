@@ -1,0 +1,24 @@
+<head>
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/chartist.js/latest/chartist.min.css">
+    <style>
+    .ct-line {
+        stroke-width: 2px;
+    }
+    .ct-label {
+        color: rgba(255, 255, 255, 0.9);
+        font-size: 9px;
+    }
+    .ct-grid {
+        stroke: rgba(255, 255, 255, 0.5);
+        stroke-width: 1px;
+        stroke-dasharray: 2px;
+        text-align: left;
+    }
+    .ct-label.ct-vertical.ct-start {
+        justify-content: flex-start;
+    }
+    </style>    
+  </head>
+<h1 class="title" data-bind="text: title, attr:{style: title_style}"></h1>
+<h1 class="title2" data-bind="text: title2, attr:{style: title2_style}"></h1>
+<div class="ct-chart ct-perfect-fourth"></div>
