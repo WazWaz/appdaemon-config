@@ -63,7 +63,7 @@ function basecalendar(widget_id, url, skin, parameters)
     if ('undefined' !== typeof gapi && 'undefined' !== typeof gapi.auth2 &&  'undefined' !== typeof gapi.client.calendar && gapi.auth2.getAuthInstance().isSignedIn.get()) {
       var d = new Date();
       var t = d.getTime();
-      if (self.lastTime == -1 || t - self.lastTime > self.updateinterval || t < self.lastTime /* clock change */) {
+      if (self.lastTime == -1 || t - self.lastTime > self.updateinterval * 1000 || t < self.lastTime /* clock change */) {
         listUpcomingEvents(self)
         self.lastTime = d.getTime();
       }
@@ -232,7 +232,11 @@ function basecalendar(widget_id, url, skin, parameters)
               var bwhen = b.start.dateTime;
               if (!bwhen) bwhen = b.start.date;
               //console.log(a.summary+" "+a.start.dateTime+"/"+a.start.date+"|"+awhen+" -> "+new Date(awhen))
-              return (new Date(awhen)).getTime() - (new Date(bwhen)).getTime();
+              var diff = (new Date(awhen)).getTime() - (new Date(bwhen)).getTime();
+              if (diff != 0) return diff;
+              diff = a.summary.localeCompare(b.summary);
+              if (diff != 0) return diff;
+              return a.id > b.id ? 1 : -1;
             });
             for (i=0; i<self.newEntries.length; ++i) {
               event = self.newEntries[i];
