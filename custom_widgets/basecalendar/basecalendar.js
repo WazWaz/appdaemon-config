@@ -44,6 +44,12 @@ function basecalendar(widget_id, url, skin, parameters)
     self.colorPast = parameters.colorpast
   }
 
+  self.twelveHour = true;
+  if ("twelvehour" in parameters)
+  {
+    self.twelveHour = parameters.twelvehour == "on"
+  }
+
   // Client ID and API key from the Developer Console
   self.CLIENT_ID = parameters.clientid
   self.API_KEY = parameters.apikey
@@ -165,6 +171,18 @@ function basecalendar(widget_id, url, skin, parameters)
     gapi.auth2.getAuthInstance().signOut();
   }
 
+  function GetCalDate(r)
+  {
+    var v = r.dateTime;
+    if (v) return new Date(v);
+    var t = new Date(r.date);
+    var midnight = new Date();
+    midnight.setFullYear(t.getFullYear(), t.getMonth(), t.getDate());
+    midnight.setHours(1,0,0);
+    console.log("loc="+midnight.toLocaleString());
+    return midnight;
+  }
+
   /**
    * Print the summary and start datetime/date of the next ten events in
    * the authorized user's calendar. If no events are found an
@@ -227,12 +245,12 @@ function basecalendar(widget_id, url, skin, parameters)
             var dayms = 1000*60*60*24;
             var date = -1;
             self.newEntries.sort(function(a,b){
-              var awhen = a.start.dateTime;
-              if (!awhen) awhen = a.start.date;
-              var bwhen = b.start.dateTime;
-              if (!bwhen) bwhen = b.start.date;
+              // var diff = (new Date(a.start.date)).getTime() - (new Date(b.start.date)).getTime();
+              // if (diff != 0) return diff;
+              var awhen = GetCalDate(a.start);
+              var bwhen = GetCalDate(b.start);
               //console.log(a.summary+" "+a.start.dateTime+"/"+a.start.date+"|"+awhen+" -> "+new Date(awhen))
-              var diff = (new Date(awhen)).getTime() - (new Date(bwhen)).getTime();
+              diff = awhen.getTime() - bwhen.getTime();
               if (diff != 0) return diff;
               diff = a.summary.localeCompare(b.summary);
               if (diff != 0) return diff;
@@ -241,10 +259,11 @@ function basecalendar(widget_id, url, skin, parameters)
             for (i=0; i<self.newEntries.length; ++i) {
               event = self.newEntries[i];
               var param = self.calendars[event.calendar]
-              console.log(event.calendar+": "+param.color)
               var when = event.start.dateTime;
+              var allday = false;
               if (!when) {
                 when = event.start.date;
+                allday = true;
               }
               var whenend = event.end.dateTime
               if (!whenend) {
@@ -270,11 +289,15 @@ function basecalendar(widget_id, url, skin, parameters)
               var time = whendate.getMinutes();
               if (time < 10) time = "0"+time;
               var hours = whendate.getHours();
-              if (hours >= 12) {
-                if (hours > 12) hours-=12;
-                time = hours+":"+time+"pm";
+              if (self.twelveHour) {
+                if (hours >= 12) {
+                  if (hours > 12) hours-=12;
+                  time = hours+":"+time+"pm";
+                } else {
+                  time = hours+":"+time+"am";
+                }
               } else {
-                time = hours+":"+time+"am";
+               time = hours + ":"+time; 
               }
               var summary = event.summary
               var now = new Date()
@@ -288,6 +311,9 @@ function basecalendar(widget_id, url, skin, parameters)
               }
               if (color) {
                 summary = "<font color=\""+color+"\">"+summary+"</font>";
+              }
+              if (allday) {
+                time = ""
               }
               text = text + "<tr><th class=timeheader>"+time+ "</th><td id=\""+event.id+"\">" + summary + "</td></tr>";
             }
